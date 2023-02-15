@@ -111,7 +111,7 @@ function checkCollisions() {
   }
 
   if (ballCurrent[1] < 0) {
-    clearInterval(gameInterval)
+    gameOver();
   }
 
   if (
@@ -151,5 +151,9 @@ function changeDirection() {
   }
 }
 
-// Scoring system
+function gameOver() {
+    clearInterval(gameInterval)
+    playArea.innerHTML = "You Lost"
+}
+
 // ? classes for ball and player?
