@@ -11,7 +11,7 @@ const ballStart = [270, 30];
 let ballCurrent = ballStart;
 let xDir = 5;
 let yDir = 5;
-let gameInterval
+let gameInterval;
 
 class Brick {
   constructor(x, y) {
@@ -134,7 +134,7 @@ function checkCollisions() {
       allBricks[i].classList.remove("brick");
       bricks.splice(i, 1);
       changeDirection();
-      scoreBoard.innerHTML++
+      scoreBoard.innerHTML++;
     }
   }
 }
@@ -152,8 +152,8 @@ function changeDirection() {
 }
 
 function gameOver() {
-    clearInterval(gameInterval)
-    playArea.innerHTML = "You Lost"
+  clearInterval(gameInterval);
+  playArea.innerHTML = "You Lost";
 }
 
 // ? classes for ball and player?
