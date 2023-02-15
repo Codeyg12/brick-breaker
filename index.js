@@ -1,18 +1,23 @@
 const playArea = document.querySelector('.play-area')
 const scoreBoard = document.getElementById('score')
-const blockWidth = 100
-const blockHeight = 20
+const brickWidth = 100
+const brickHeight = 20
+const areaWidth = 560
+const areaHeight = 300
+const ballDiameter = 20
 const playerStart = [230, 10]
 let currentPosition = playerStart
 const ballStart = [270, 30]
 let ballCurrent = ballStart
+let xDir = 2
+let yDir = 2
 
 class Brick {
     constructor(x, y) {
         this.bottomLeft = [x, y]
-        this.bottomRight = [x + blockWidth, y]
-        this.topLeft = [x, y + blockHeight]
-        this.topRight = [x + blockWidth, y + blockHeight]
+        this.bottomRight = [x + brickWidth, y]
+        this.topLeft = [x, y + brickHeight]
+        this.topRight = [x + brickWidth, y + brickHeight]
     }
 }
 
@@ -65,7 +70,7 @@ function movePlayer(e) {
             }
             break;
         case 'ArrowRight':
-            if (currentPosition[0] < 460) {
+            if (currentPosition[0] < areaWidth - brickWidth) {
                 currentPosition[0] += 5
                 drawPlayer()
             }
@@ -85,4 +90,32 @@ playArea.appendChild(ball)
 function drawBall() {
     ball.style.left = `${ballCurrent[0]}px`
 ball.style.bottom = `${ballCurrent[1]}px`
+}
+
+function moveBall() {
+    ballCurrent[0] += xDir
+    ballCurrent[1] += yDir
+    drawBall()
+    checkCollisions()
+}
+setInterval(moveBall, 50)
+
+function checkCollisions() {
+    if (ballCurrent[0] >= areaWidth - ballDiameter || ballCurrent[1] >= areaHeight - ballDiameter) {
+        changeDirection()
+    } else if (ballCurrent[0] < 0 || ballCurrent[1] < 0) {
+        changeDirection()
+    }
+}
+
+function changeDirection() {
+    if (xDir == 2 && yDir == 2) {
+        yDir = -2
+    } else if (xDir == 2 && yDir == -2) {
+        xDir = -2
+    } else if (xDir == -2 && yDir == -2) {
+        yDir = 2
+    } else if (xDir = -2 && yDir == 2) {
+        xDir = 2
+    }
 }
