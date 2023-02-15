@@ -9,8 +9,8 @@ const playerStart = [230, 10]
 let currentPosition = playerStart
 const ballStart = [270, 30]
 let ballCurrent = ballStart
-let xDir = 2
-let yDir = 2
+let xDir = 5
+let yDir = 5
 
 class Brick {
     constructor(x, y) {
@@ -101,21 +101,23 @@ function moveBall() {
 setInterval(moveBall, 50)
 
 function checkCollisions() {
-    if (ballCurrent[0] >= areaWidth - ballDiameter || ballCurrent[1] >= areaHeight - ballDiameter) {
+    if (ballCurrent[0] >= areaWidth - ballDiameter || ballCurrent[1] >= areaHeight - ballDiameter || ballCurrent[0] < 0 || ballCurrent[1] < 0) {
         changeDirection()
-    } else if (ballCurrent[0] < 0 || ballCurrent[1] < 0) {
+    }
+
+    if ((ballCurrent[0] > currentPosition[0] && ballCurrent[0] < currentPosition[0] + brickWidth) && (ballCurrent[1] > currentPosition[1] && ballCurrent[1] < currentPosition[1] + brickHeight)) {
         changeDirection()
     }
 }
 
 function changeDirection() {
-    if (xDir == 2 && yDir == 2) {
-        yDir = -2
-    } else if (xDir == 2 && yDir == -2) {
-        xDir = -2
-    } else if (xDir == -2 && yDir == -2) {
-        yDir = 2
-    } else if (xDir = -2 && yDir == 2) {
-        xDir = 2
+    if (xDir == 5 && yDir == 5) {
+        yDir = -5
+    } else if (xDir == 5 && yDir == -5) {
+        xDir = -5
+    } else if (xDir == -5 && yDir == -5) {
+        yDir = 5
+    } else if (xDir = -5 && yDir == 5) {
+        xDir = 5
     }
 }
