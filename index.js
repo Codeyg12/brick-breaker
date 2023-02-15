@@ -4,6 +4,8 @@ const blockWidth = 100
 const blockHeight = 20
 const playerStart = [230, 10]
 let currentPosition = playerStart
+const ballStart = [270, 30]
+let ballCurrent = ballStart
 
 class Brick {
     constructor(x, y) {
@@ -74,3 +76,13 @@ function movePlayer(e) {
 }
 
 document.addEventListener('keydown', movePlayer)
+
+const ball = document.createElement('div')
+ball.classList.add('ball')
+drawBall()
+playArea.appendChild(ball)
+
+function drawBall() {
+    ball.style.left = `${ballCurrent[0]}px`
+ball.style.bottom = `${ballCurrent[1]}px`
+}
