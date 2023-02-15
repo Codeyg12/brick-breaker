@@ -108,6 +108,15 @@ function checkCollisions() {
     if ((ballCurrent[0] > currentPosition[0] && ballCurrent[0] < currentPosition[0] + brickWidth) && (ballCurrent[1] > currentPosition[1] && ballCurrent[1] < currentPosition[1] + brickHeight)) {
         changeDirection()
     }
+
+    for (let i = 0; i < bricks.length; i++) {
+        if ((ballCurrent[0] > bricks[i].bottomLeft[0] && ballCurrent[0] < bricks[i].bottomRight[0]) && ballCurrent[1] + ballDiameter > bricks[i].bottomLeft[1] && ballCurrent[1] < bricks[i].topLeft[1]) {
+            const allBricks = Array.from(document.querySelectorAll('.brick'))
+            allBricks[i].classList.remove('brick')
+            bricks.splice(i, 1)
+            changeDirection()
+        }
+    }
 }
 
 function changeDirection() {
