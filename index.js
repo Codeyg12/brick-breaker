@@ -13,7 +13,21 @@ class Brick {
 }
 
 let bricks = [
-    new Brick(10, 270)
+    new Brick(10, 270),
+    new Brick(120, 270),
+    new Brick(230, 270),
+    new Brick(340, 270),
+    new Brick(450, 270),
+    new Brick(10, 245),
+    new Brick(120, 245),
+    new Brick(230, 245),
+    new Brick(340, 245),
+    new Brick(450, 245),
+    new Brick(10, 220),
+    new Brick(120, 220),
+    new Brick(230, 220),
+    new Brick(340, 220),
+    new Brick(450, 220)
 ]
 
 function addBricks() {
