@@ -11,6 +11,7 @@ const ballStart = [270, 30];
 let ballCurrent = ballStart;
 let xDir = 5;
 let yDir = 5;
+let gameInterval
 
 class Brick {
   constructor(x, y) {
@@ -98,16 +99,20 @@ function moveBall() {
   drawBall();
   checkCollisions();
 }
-setInterval(moveBall, 50);
+gameInterval = setInterval(moveBall, 50);
 
 function checkCollisions() {
   if (
     ballCurrent[0] >= areaWidth - ballDiameter ||
     ballCurrent[1] >= areaHeight - ballDiameter ||
-    ballCurrent[0] < 0 ||
-    ballCurrent[1] < 0
+    ballCurrent[0] < 0
   ) {
     changeDirection();
+  }
+
+  if (ballCurrent[1] < 0) {
+    console.log(' You lose')
+    clearInterval(gameInterval)
   }
 
   if (
