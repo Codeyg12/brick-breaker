@@ -4,3 +4,10 @@
     height: 300px;
     border: 1px solid black;
 }
+
+.brick {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background-color: greenyellow;
+}
