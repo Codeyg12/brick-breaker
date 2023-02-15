@@ -46,18 +46,31 @@ addBricks()
 
 const player = document.createElement('div')
 player.classList.add('player')
-player.style.left = `${currentPosition[0]}px`
-player.style.bottom = `${currentPosition[1]}px`
+drawPlayer()
 playArea.appendChild(player)
+
+function drawPlayer() {
+    player.style.left = `${currentPosition[0]}px`
+    player.style.bottom = `${currentPosition[1]}px`
+}
 
 function movePlayer(e) {
     switch (e.key) {
         case 'ArrowLeft':
-            player.style.left = `${currentPosition[0]++}px`
+            if (currentPosition[0] > 0) {
+                currentPosition[0] -= 5
+                drawPlayer()
+            }
             break;
         case 'ArrowRight':
+            if (currentPosition[0] < 460) {
+                currentPosition[0] += 5
+                drawPlayer()
+            }
             break;
         default:
             break;
     }
 }
+
+document.addEventListener('keydown', movePlayer)
