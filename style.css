@@ -1,0 +1,6 @@
+.play-area {
+    position: absolute;
+    width: 560px;
+    height: 300px;
+    border: 1px solid black;
+}
