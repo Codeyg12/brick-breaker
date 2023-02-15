@@ -111,7 +111,6 @@ function checkCollisions() {
   }
 
   if (ballCurrent[1] < 0) {
-    console.log(' You lose')
     clearInterval(gameInterval)
   }
 
@@ -135,6 +134,7 @@ function checkCollisions() {
       allBricks[i].classList.remove("brick");
       bricks.splice(i, 1);
       changeDirection();
+      scoreBoard.innerHTML++
     }
   }
 }
@@ -152,5 +152,4 @@ function changeDirection() {
 }
 
 // Scoring system
-// Losing
 // ? classes for ball and player?
