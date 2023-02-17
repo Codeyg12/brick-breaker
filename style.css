@@ -35,3 +35,8 @@
     border-radius: 10px;
     background-color: darkmagenta;
 }
+
+.restart {
+    text-align: center;
+    font-size: 50px;
+}

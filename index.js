@@ -1,6 +1,6 @@
 const playArea = document.querySelector(".play-area");
 const scoreBoard = document.getElementById("score");
-const restart = document.querySelector('.restart')
+const restart = document.querySelector(".restart");
 const brickWidth = 100;
 const brickHeight = 20;
 const areaWidth = 560;
@@ -65,7 +65,7 @@ function drawPlayer() {
 }
 
 function movePlayer(e) {
-  console.log(e.key)
+  console.log(e.key);
   switch (e.key) {
     case "ArrowLeft":
       if (currentPosition[0] > 0) {
@@ -80,9 +80,9 @@ function movePlayer(e) {
       }
       break;
     default:
-      console.log(gamePlaying)
+      console.log(gamePlaying);
       if (!gamePlaying) {
-        window.location.reload()
+        window.location.reload();
       }
       break;
   }
@@ -159,10 +159,10 @@ function changeDirection() {
 }
 
 function gameOver() {
-  gamePlaying = false
+  gamePlaying = false;
   clearInterval(gameInterval);
   playArea.innerHTML = "You Lost";
-  restart.innerHTML = "Click any button to play again"
+  restart.innerHTML = "Click any button to play again";
 }
 
 // ? classes for ball and player?
