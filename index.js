@@ -228,16 +228,21 @@ class Player {
 
 class Ball {
   constructor() {
-    this.diameter = 20
-
+    this.x = 280
+    this.y = 255
+    this.diameter = 15
+    this.color = 'darkmagenta'
   }
 
-  draw() {
-
+  draw(context) {
+    context.beginPath()
+    context.fillStyle = this.color
+    context.arc(this.x, this.y, this.diameter, 0, 2 * Math.PI)
+    context.fill();
   }
 
   update() {
-    
+
   }
 }
 
@@ -247,11 +252,13 @@ class Game {
     this.height = height
     this.player = new Player(this)
     this.input = new InputHandler(this)
+    this.ball = new Ball()
     this.keys = []
   }
 
   draw(context) {
     this.player.draw(context)
+    this.ball.draw(context)
   }
 
   update() {
