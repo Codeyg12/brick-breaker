@@ -226,6 +226,21 @@ class Player {
 
 }
 
+class Ball {
+  constructor() {
+    this.diameter = 20
+
+  }
+
+  draw() {
+
+  }
+
+  update() {
+    
+  }
+}
+
 class Game {
   constructor(width, height) {
     this.width = width
