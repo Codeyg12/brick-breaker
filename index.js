@@ -214,6 +214,8 @@ class Game {
     this.width = width
     this.height = height
     this.player = new Player(this)
+    this.input = new InputHandler(this)
+    this.keys = []
   }
 
   draw(context) {
