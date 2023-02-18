@@ -198,13 +198,24 @@ class Player {
     this.height = 20
     this.x = 230
     this.y = 270
-    this.speedX = 5
+    this.speedX = 0
     this.color = 'orangered'
   }
 
   draw(context) {
     context.fillStyle = this.color
     context.fillRect(this.x, this.y, this.width, this.height)
+  }
+
+  update() {
+    if (this.game.keys.includes('ArrowRight')) {
+      this.speedX = 5
+    } else if (this.game.keys.includes('ArrowLeft')) {
+      this.speedX = -5
+    } else {
+      this.speedX = 0
+    }
+    this.x += this.speedX
   }
 
 }
@@ -223,7 +234,7 @@ class Game {
   }
 
   update() {
-
+    this.player.update()
   }
 }
 const game = new Game(canvas.width, canvas.height)
