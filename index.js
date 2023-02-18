@@ -15,6 +15,11 @@ let yDir = 5;
 let gameInterval;
 let gamePlaying = true;
 
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
+canvas.width = 560
+canvas.height = 300
+
 class Brick {
   constructor(x, y) {
     this.bottomLeft = [x, y];

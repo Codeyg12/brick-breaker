@@ -1,5 +1,5 @@
 .play-area {
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -10,7 +10,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 80px;
+    font-size: 80px; */
+}
+
+#canvas {
+    border: 1px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .brick {
