@@ -1,5 +1,11 @@
-.play-area {
-    /* position: absolute;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* .play-area {
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -10,8 +16,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 80px; */
-}
+    font-size: 80px;
+} */
 
 #canvas {
     border: 1px solid black;
@@ -20,8 +26,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-/* .brick {
+/* 
+.brick {
     position: absolute;
     width: 100px;
     height: 20px;
@@ -33,7 +39,7 @@
     position: absolute;
     width: 100px;
     height: 20px;
-    background-color: orangered;
+    background-color: blueviolet;
 }
 
 .ball {
@@ -42,9 +48,9 @@
     height: 20px;
     border-radius: 10px;
     background-color: darkmagenta;
-} */
+}
 
 .restart {
     text-align: center;
     font-size: 50px;
-}
+} */
