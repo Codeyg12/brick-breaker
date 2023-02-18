@@ -174,37 +174,40 @@ canvas.height = 300
 
 let lastTime = 0
 
-class Game {
-  constructor(width, height) {
-    this.width = width
-    this.height = height
-  }
-
-  draw() {
-
-  }
-
-  update() {
-    
-  }
-}
-const game = new Game(canvas.width, canvas.height)
-
 class Player {
   constructor(game) {
     this.game = game
     this.width = 100
     this.height = 20
     this.x = 230
-    this.y = 10
+    this.y = 250
     this.speedX = 5
+    this.color = 'orangered'
   }
 
   draw(context) {
-    context.drawRect(0, 0, this.width, this.height)
+    context.fillStyle = this.color
+    context.fillRect(this.x, this.y, this.width, this.height)
   }
 
 }
+
+class Game {
+  constructor(width, height) {
+    this.width = width
+    this.height = height
+    this.player = new Player(this)
+  }
+
+  draw(context) {
+    this.player.draw(context)
+  }
+
+  update() {
+
+  }
+}
+const game = new Game(canvas.width, canvas.height)
 
 function animate(timestamp) {
   const deltaTime =  timestamp - lastTime
