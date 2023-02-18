@@ -174,13 +174,30 @@ canvas.height = 300
 
 let lastTime = 0
 
+class InputHandler {
+  constructor(game) {
+    this.game = game
+    window.addEventListener('keydown', (e) => {
+      if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !this.game.keys.includes(e.key)) {
+        this.game.keys.push(e.key)
+      }
+    })
+
+    window.addEventListener('keyup', (e) => {
+      if (this.game.keys.includes(e.key)) {
+        this.game.keys.splice(this.game.keys.indexOf(e.key), 1)
+      }
+    })
+  }
+}
+
 class Player {
   constructor(game) {
     this.game = game
     this.width = 100
     this.height = 20
     this.x = 230
-    this.y = 250
+    this.y = 270
     this.speedX = 5
     this.color = 'orangered'
   }
