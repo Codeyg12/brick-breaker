@@ -15,11 +15,6 @@ let yDir = 5;
 let gameInterval;
 let gamePlaying = true;
 
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
-canvas.width = 560
-canvas.height = 300
-
 class Brick {
   constructor(x, y) {
     this.bottomLeft = [x, y];
@@ -170,4 +165,54 @@ function gameOver() {
   restart.innerHTML = "Click any button to play again";
 }
 
+
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
+canvas.width = 560
+canvas.height = 300
+
+
+let lastTime = 0
+
+class Game {
+  constructor(width, height) {
+    this.width = width
+    this.height = height
+  }
+
+  draw() {
+
+  }
+
+  update() {
+    
+  }
+}
+const game = new Game(canvas.width, canvas.height)
+
+class Player {
+  constructor(game) {
+    this.game = game
+    this.width = 100
+    this.height = 20
+    this.x = 230
+    this.y = 10
+    this.speedX = 5
+  }
+
+  draw(context) {
+    context.drawRect(0, 0, this.width, this.height)
+  }
+
+}
+
+function animate(timestamp) {
+  const deltaTime =  timestamp - lastTime
+  lastTime = timestamp
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  game.draw(ctx)
+  game.update(deltaTime)
+  requestAnimationFrame(animate)
+}
+animate(0)
 // ? classes for ball and player?
