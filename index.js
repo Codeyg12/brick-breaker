@@ -216,6 +216,12 @@ class Player {
       this.speedX = 0
     }
     this.x += this.speedX
+
+    if (this.x > this.game.width - this.width) {
+      this.x = this.game.width - this.width
+    } else if (this.x < 0) {
+      this.x = 0
+    }
   }
 
 }
