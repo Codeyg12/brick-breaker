@@ -230,6 +230,8 @@ class Ball {
   constructor() {
     this.x = 280
     this.y = 255
+    this.speedX = 2
+    this.speedY = 2
     this.diameter = 15
     this.color = 'darkmagenta'
   }
