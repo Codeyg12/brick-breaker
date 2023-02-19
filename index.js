@@ -15,44 +15,44 @@ let yDir = 5;
 let gameInterval;
 let gamePlaying = true;
 
-class Brick {
-  constructor(x, y) {
-    this.bottomLeft = [x, y];
-    this.bottomRight = [x + brickWidth, y];
-    this.topLeft = [x, y + brickHeight];
-    this.topRight = [x + brickWidth, y + brickHeight];
-  }
-}
+// class Brick {
+//   constructor(x, y) {
+//     this.bottomLeft = [x, y];
+//     this.bottomRight = [x + brickWidth, y];
+//     this.topLeft = [x, y + brickHeight];
+//     this.topRight = [x + brickWidth, y + brickHeight];
+//   }
+// }
 
-let bricks = [
-  new Brick(10, 270),
-  new Brick(120, 270),
-  new Brick(230, 270),
-  new Brick(340, 270),
-  new Brick(450, 270),
-  new Brick(10, 245),
-  new Brick(120, 245),
-  new Brick(230, 245),
-  new Brick(340, 245),
-  new Brick(450, 245),
-  new Brick(10, 220),
-  new Brick(120, 220),
-  new Brick(230, 220),
-  new Brick(340, 220),
-  new Brick(450, 220),
-];
+// let bricks = [
+//   new Brick(10, 270),
+//   new Brick(120, 270),
+//   new Brick(230, 270),
+//   new Brick(340, 270),
+//   new Brick(450, 270),
+//   new Brick(10, 245),
+//   new Brick(120, 245),
+//   new Brick(230, 245),
+//   new Brick(340, 245),
+//   new Brick(450, 245),
+//   new Brick(10, 220),
+//   new Brick(120, 220),
+//   new Brick(230, 220),
+//   new Brick(340, 220),
+//   new Brick(450, 220),
+// ];
 
-function addBricks() {
-  for (let i = 0; i < bricks.length; i++) {
-    const brick = document.createElement("div");
-    brick.classList.add("brick");
-    brick.style.left = `${bricks[i].bottomLeft[0]}px`;
-    brick.style.bottom = `${bricks[i].bottomLeft[1]}px`;
-    playArea.appendChild(brick);
-  }
-}
+// function addBricks() {
+//   for (let i = 0; i < bricks.length; i++) {
+//     const brick = document.createElement("div");
+//     brick.classList.add("brick");
+//     brick.style.left = `${bricks[i].bottomLeft[0]}px`;
+//     brick.style.bottom = `${bricks[i].bottomLeft[1]}px`;
+//     playArea.appendChild(brick);
+//   }
+// }
 
-addBricks();
+// addBricks();
 
 const player = document.createElement("div");
 player.classList.add("player");
@@ -130,20 +130,20 @@ function checkCollisions() {
     changeDirection();
   }
 
-  for (let i = 0; i < bricks.length; i++) {
-    if (
-      ballCurrent[0] > bricks[i].bottomLeft[0] &&
-      ballCurrent[0] < bricks[i].bottomRight[0] &&
-      ballCurrent[1] + ballDiameter > bricks[i].bottomLeft[1] &&
-      ballCurrent[1] < bricks[i].topLeft[1]
-    ) {
-      const allBricks = Array.from(document.querySelectorAll(".brick"));
-      allBricks[i].classList.remove("brick");
-      bricks.splice(i, 1);
-      changeDirection();
-      scoreBoard.innerHTML++;
-    }
-  }
+  // for (let i = 0; i < bricks.length; i++) {
+  //   if (
+  //     ballCurrent[0] > bricks[i].bottomLeft[0] &&
+  //     ballCurrent[0] < bricks[i].bottomRight[0] &&
+  //     ballCurrent[1] + ballDiameter > bricks[i].bottomLeft[1] &&
+  //     ballCurrent[1] < bricks[i].topLeft[1]
+  //   ) {
+  //     const allBricks = Array.from(document.querySelectorAll(".brick"));
+  //     allBricks[i].classList.remove("brick");
+  //     bricks.splice(i, 1);
+  //     changeDirection();
+  //     scoreBoard.innerHTML++;
+  //   }
+  // }
 }
 
 function changeDirection() {
@@ -188,6 +188,27 @@ class InputHandler {
         this.game.keys.splice(this.game.keys.indexOf(e.key), 1)
       }
     })
+  }
+}
+
+class Brick {
+  constructor(multiple) {
+    this.width = 100
+    this.height = 20
+    this.color = 'greenyellow'
+    this.gap = 100
+    this.multiple = multiple
+  }
+  draw(context) {
+    context.fillStyle = this.color
+    context.fillRect(this.x - this.gap, this.y, this.width, this.height)
+  }
+}
+class Row1 extends Brick {
+  constructor(multiple) {
+    super(multiple)
+    this.x = 110 * this.multiple
+    this.y = 20
   }
 }
 
@@ -242,14 +263,6 @@ class Ball {
     context.arc(this.x, this.y, this.diameter, 0, 2 * Math.PI)
     context.fill();
   }
-  // if (
-  //   ballCurrent[0] > currentPosition[0] &&
-  //   ballCurrent[0] < currentPosition[0] + brickWidth &&
-  //   ballCurrent[1] > currentPosition[1] &&
-  //   ballCurrent[1] < currentPosition[1] + brickHeight
-  // ) {
-  //   changeDirection();
-  // }
   update() {
     // Play area border
     if (this.x < 0 + this.diameter) {
@@ -262,7 +275,6 @@ class Ball {
       this.speedY = -2
       // gameOver()
     }
-    // console.log(this.game.player)
     // Player area 
     if (this.x > this.game.player.x && this.y + this.diameter > this.game.player.y && this.x < this.game.player.x + this.game.player.width) {
       this.speedY = -2
@@ -279,12 +291,25 @@ class Game {
     this.player = new Player(this)
     this.input = new InputHandler(this)
     this.ball = new Ball(this)
+    // this.brick = new Brick()
     this.keys = []
+    this.bricks = []
+    this.maxBricks = 15
   }
 
   draw(context) {
     this.player.draw(context)
     this.ball.draw(context)
+    // this.brick.draw(context)
+    if (this.maxBricks > this.bricks.length) {
+      for (let i = 1; i <= 5; i++) {
+        console.log(i)
+        this.bricks.push(new Row1(i))
+      }
+    }
+    this.bricks.forEach(brick => {
+      brick.draw(context)
+    })
   }
 
   update() {
