@@ -208,7 +208,21 @@ class Row1 extends Brick {
   constructor(multiple) {
     super(multiple)
     this.x = 110 * this.multiple
-    this.y = 20
+    this.y = 10
+  }
+}
+class Row2 extends Brick {
+  constructor(multiple) {
+    super(multiple)
+    this.x = 110 * this.multiple
+    this.y = 40
+  }
+}
+class Row3 extends Brick {
+  constructor(multiple) {
+    super(multiple)
+    this.x = 110 * this.multiple
+    this.y = 70
   }
 }
 
@@ -305,6 +319,8 @@ class Game {
       for (let i = 1; i <= 5; i++) {
         console.log(i)
         this.bricks.push(new Row1(i))
+        this.bricks.push(new Row2(i))
+        this.bricks.push(new Row3(i))
       }
     }
     this.bricks.forEach(brick => {
