@@ -65,7 +65,7 @@ function drawPlayer() {
 }
 
 function movePlayer(e) {
-  console.log(e.key);
+  // console.log(e.key);
   switch (e.key) {
     case "ArrowLeft":
       if (currentPosition[0] > 0) {
@@ -230,29 +230,28 @@ class Ball {
   constructor(game) {
     this.game = game
     this.x = 280
-    this.y = 255
+    this.y = 260
     this.speedX = -2
     this.speedY = -2
-    this.diameter = 15
+    this.diameter = 10
     this.color = 'darkmagenta'
   }
-  // if (
-  //   ballCurrent[0] >= areaWidth - ballDiameter ||
-  //   ballCurrent[1] >= areaHeight - ballDiameter ||
-  //   ballCurrent[0] < 0
-  // ) {
-  //   changeDirection();
-  // }
   draw(context) {
     context.beginPath()
     context.fillStyle = this.color
     context.arc(this.x, this.y, this.diameter, 0, 2 * Math.PI)
     context.fill();
   }
-
+  // if (
+  //   ballCurrent[0] > currentPosition[0] &&
+  //   ballCurrent[0] < currentPosition[0] + brickWidth &&
+  //   ballCurrent[1] > currentPosition[1] &&
+  //   ballCurrent[1] < currentPosition[1] + brickHeight
+  // ) {
+  //   changeDirection();
+  // }
   update() {
-    console.log(this.y)
-    // if (this.x >= this.game.width - this.diameter || this.y >= this.game.height - this.diameter || this.x < 0 || this.y < 0)
+    // Play area border
     if (this.x < 0 + this.diameter) {
       this.speedX = 2
     } else if (this.x > this.game.width - this.diameter) {
@@ -260,6 +259,12 @@ class Ball {
     } else if (this.y < 0 + this.diameter) {
       this.speedY = 2
     } else if (this.y > this.game.height - this.diameter) {
+      this.speedY = -2
+      // gameOver()
+    }
+    // console.log(this.game.player)
+    // Player area 
+    if (this.x > this.game.player.x && this.y + this.diameter > this.game.player.y && this.x < this.game.player.x + this.game.player.width) {
       this.speedY = -2
     }
     this.y += this.speedY
