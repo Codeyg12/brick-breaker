@@ -227,15 +227,22 @@ class Player {
 }
 
 class Ball {
-  constructor() {
+  constructor(game) {
+    this.game = game
     this.x = 280
     this.y = 255
-    this.speedX = 2
-    this.speedY = 2
+    this.speedX = -2
+    this.speedY = -2
     this.diameter = 15
     this.color = 'darkmagenta'
   }
-
+  // if (
+  //   ballCurrent[0] >= areaWidth - ballDiameter ||
+  //   ballCurrent[1] >= areaHeight - ballDiameter ||
+  //   ballCurrent[0] < 0
+  // ) {
+  //   changeDirection();
+  // }
   draw(context) {
     context.beginPath()
     context.fillStyle = this.color
@@ -244,7 +251,15 @@ class Ball {
   }
 
   update() {
-
+    console.log(this.x)
+    // if (this.x >= this.game.width - this.diameter || this.y >= this.game.height - this.diameter || this.x < 0 || this.y < 0)
+    if (this.x < 0 + this.diameter) {
+      this.speedX = 2
+    } else if (this.x > this.game.width - this.diameter) {
+      this.speedX = -2
+    }
+    // this.y += this.speedY
+    this.x += this.speedX
   }
 }
 
@@ -254,7 +269,7 @@ class Game {
     this.height = height
     this.player = new Player(this)
     this.input = new InputHandler(this)
-    this.ball = new Ball()
+    this.ball = new Ball(this)
     this.keys = []
   }
 
@@ -265,6 +280,7 @@ class Game {
 
   update() {
     this.player.update()
+    this.ball.update()
   }
 }
 const game = new Game(canvas.width, canvas.height)
