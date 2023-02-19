@@ -251,14 +251,18 @@ class Ball {
   }
 
   update() {
-    console.log(this.x)
+    console.log(this.y)
     // if (this.x >= this.game.width - this.diameter || this.y >= this.game.height - this.diameter || this.x < 0 || this.y < 0)
     if (this.x < 0 + this.diameter) {
       this.speedX = 2
     } else if (this.x > this.game.width - this.diameter) {
       this.speedX = -2
+    } else if (this.y < 0 + this.diameter) {
+      this.speedY = 2
+    } else if (this.y > this.game.height - this.diameter) {
+      this.speedY = -2
     }
-    // this.y += this.speedY
+    this.y += this.speedY
     this.x += this.speedX
   }
 }
