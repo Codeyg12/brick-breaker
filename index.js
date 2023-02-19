@@ -198,30 +198,30 @@ class Brick {
     this.color = 'greenyellow'
     this.gap = 100
     this.multiple = multiple
+    this.x = 110 * this.multiple
   }
   draw(context) {
     context.fillStyle = this.color
     context.fillRect(this.x - this.gap, this.y, this.width, this.height)
+    context.fillStyle = 'black'
+    context.strokeRect(this.x - this.gap, this.y, this.width, this.height)
   }
 }
 class Row1 extends Brick {
   constructor(multiple) {
     super(multiple)
-    this.x = 110 * this.multiple
     this.y = 10
   }
 }
 class Row2 extends Brick {
   constructor(multiple) {
     super(multiple)
-    this.x = 110 * this.multiple
     this.y = 40
   }
 }
 class Row3 extends Brick {
   constructor(multiple) {
     super(multiple)
-    this.x = 110 * this.multiple
     this.y = 70
   }
 }
