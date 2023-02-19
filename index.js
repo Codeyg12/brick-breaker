@@ -80,7 +80,7 @@ function movePlayer(e) {
       }
       break;
     default:
-      console.log(gamePlaying);
+      // console.log(gamePlaying);
       if (!gamePlaying) {
         window.location.reload();
       }
@@ -199,6 +199,7 @@ class Brick {
     this.gap = 100
     this.multiple = multiple
     this.x = 110 * this.multiple
+    this.markedForDeletion = false
   }
   draw(context) {
     context.fillStyle = this.color
@@ -293,6 +294,10 @@ class Ball {
     if (this.x > this.game.player.x && this.y + this.diameter > this.game.player.y && this.x < this.game.player.x + this.game.player.width) {
       this.speedY = -2
     }
+    // brick detection
+    // for (let i = 0; i <= this.game.bricks; i++) {
+    //   console.log(this.game.bricks)
+    // }
     this.y += this.speedY
     this.x += this.speedX
   }
@@ -310,13 +315,13 @@ class Game {
     this.bricks = []
     this.maxBricks = 15
   }
-
+  
   draw(context) {
     this.player.draw(context)
-    this.ball.draw(context)
     // this.brick.draw(context)
     if (this.maxBricks > this.bricks.length) {
       for (let i = 1; i <= 5; i++) {
+        console.log(this.bricks.length)
         console.log(i)
         this.bricks.push(new Row1(i))
         this.bricks.push(new Row2(i))
@@ -326,11 +331,26 @@ class Game {
     this.bricks.forEach(brick => {
       brick.draw(context)
     })
+    this.ball.draw(context)
   }
 
   update() {
     this.player.update()
+    this.bricks.forEach(brick => {
+      if (this.checkCollision(this.ball, brick)) {
+        brick.markedForDeletion = true
+      }
+    })
+    this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
     this.ball.update()
+  }
+  checkCollision(rect1, rect2) {
+    return (
+      rect1.x < rect2.x + rect2.width &&
+      rect1.x + rect1.diameter > rect2.x &&
+      rect1.y < rect2.y + rect2.height &&
+      rect1.diameter + rect1.y > rect2.y
+    );
   }
 }
 const game = new Game(canvas.width, canvas.height)
