@@ -300,14 +300,23 @@ class Ball {
     for (let i = 0; i < this.game.bricks.length; i++) {
       if (this.x - (this.diameter * 2) < this.game.bricks[i].x && this.y - (this.diameter * 2) < this.game.bricks[i].y && this.x - (this.diameter * 2) > this.game.bricks[i].x - this.game.bricks[i].width && this.y - (this.diameter * 2) > this.game.bricks[i].y - this.game.bricks[i].height) {
         this.game.bricks[i].markedForDeletion = true
-        this.speedY = 2
+        // this.speedY = 2
+        this.changeDirection()
       }
-      // if (this.y - (this.diameter * 2) > this.game.bricks[i].y - this.game.bricks[i].height) {
-      //   this.speedY = 2
-      // }
     }
     this.y += this.speedY
     this.x += this.speedX
+  }
+  changeDirection() {
+    if (this.speedX == 2 && this.speedY == 2) {
+      this.speedY = -2;
+    } else if (this.speedX == 2 && this.speedY == -2) {
+      this.speedX = -2;
+    } else if (this.speedX == -2 && this.speedY == -2) {
+      this.speedY = 2;
+    } else if ((this.speedX = -2 && this.speedY == 2)) {
+      this.speedX = 2;
+    }
   }
 }
 
@@ -361,5 +370,3 @@ function animate(timestamp) {
 }
 animate(0)
 // ? classes for ball and player?
-// game start variable starting = !starting
-// addBricks function
