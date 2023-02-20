@@ -277,6 +277,8 @@ class Ball {
     context.fillStyle = this.color
     context.arc(this.x, this.y, this.diameter, 0, 2 * Math.PI)
     context.fill();
+    context.beginPath()
+    context.strokeRect(this.x - this.diameter, this.y - this.diameter, this.diameter * 2, this.diameter * 2)
   }
   update() {
     // Play area border
@@ -295,11 +297,11 @@ class Ball {
       this.speedY = -2
     }
     // brick detection
-    for (let i = 0; i < this.game.bricks.length; i++) {
-      if (this.x < this.game.bricks[i].x && this.x > this.game.bricks[i].x && this.y < this.game.bricks[i].y + this.game.bricks[i].height && this.y > this.game.bricks[i].y) {
-        console.log('y')
-      }
-    }
+    // for (let i = 0; i < this.game.bricks.length; i++) {
+    //   if (this.x < this.game.bricks[i].x && this.x > this.game.bricks[i].x && this.y < this.game.bricks[i].y + this.game.bricks[i].height && this.y > this.game.bricks[i].y) {
+    //     console.log('y')
+    //   }
+    // }
     //! COLLISION
     // rect1.x < rect2.x + rect2.width &&
       // rect1.x + rect1.diameter > rect2.x &&
