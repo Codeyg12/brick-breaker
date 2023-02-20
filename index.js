@@ -295,9 +295,21 @@ class Ball {
       this.speedY = -2
     }
     // brick detection
-    // for (let i = 0; i <= this.game.bricks; i++) {
-    //   console.log(this.game.bricks)
-    // }
+    for (let i = 0; i < this.game.bricks.length; i++) {
+      if (this.x < this.game.bricks[i].x && this.x > this.game.bricks[i].x && this.y < this.game.bricks[i].y + this.game.bricks[i].height && this.y > this.game.bricks[i].y) {
+        console.log('y')
+      }
+    }
+    //! COLLISION
+    // rect1.x < rect2.x + rect2.width &&
+      // rect1.x + rect1.diameter > rect2.x &&
+      // rect1.y < rect2.y + rect2.height &&
+      // rect1.diameter + rect1.y > rect2.y
+      //! UPPER
+    // ballCurrent[0] > bricks[i].bottomLeft[0] &&
+    //     ballCurrent[0] < bricks[i].bottomRight[0] &&
+    //     ballCurrent[1] + ballDiameter > bricks[i].bottomLeft[1] &&
+    //     ballCurrent[1] < bricks[i].topLeft[1]
     this.y += this.speedY
     this.x += this.speedX
   }
@@ -310,7 +322,7 @@ class Game {
     this.player = new Player(this)
     this.input = new InputHandler(this)
     this.ball = new Ball(this)
-    // this.brick = new Brick()
+    this.gameStart = true
     this.keys = []
     this.bricks = []
     this.maxBricks = 15
@@ -318,16 +330,14 @@ class Game {
   
   draw(context) {
     this.player.draw(context)
-    // this.brick.draw(context)
-    if (this.maxBricks > this.bricks.length) {
-      for (let i = 1; i <= 5; i++) {
-        console.log(this.bricks.length)
-        console.log(i)
-        this.bricks.push(new Row1(i))
-        this.bricks.push(new Row2(i))
-        this.bricks.push(new Row3(i))
+      if (this.gameStart) {
+        this.gameStart = !this.gameStart
+        for (let i = 1; i <= 5; i++) {
+          this.bricks.push(new Row1(i))
+          this.bricks.push(new Row2(i))
+          this.bricks.push(new Row3(i))
+        }
       }
-    }
     this.bricks.forEach(brick => {
       brick.draw(context)
     })
@@ -343,6 +353,9 @@ class Game {
     })
     this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
     this.ball.update()
+  }
+  addBricks() {
+    console.log(this.maxBricks)
   }
   checkCollision(rect1, rect2) {
     return (
@@ -365,3 +378,5 @@ function animate(timestamp) {
 }
 animate(0)
 // ? classes for ball and player?
+// game start variable starting = !starting
+// addBricks function
