@@ -181,8 +181,8 @@ class InputHandler {
       if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !this.game.keys.includes(e.key)) {
         this.game.keys.push(e.key)
       }
-      if (this.game.gameOver) {
-        console.log(e.key)
+      if (this.game.gameOver && e.key === 'Enter') {
+        this.game.keys.push(e.key)
       }
     })
 
@@ -399,6 +399,9 @@ class Game {
     this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
     if (this.bricks.length == 0 || this.ball.lost) {
       this.gameOver = true
+    }
+    if (this.keys.includes('Enter')) {
+      window.location.reload()
     }
   }
 }
