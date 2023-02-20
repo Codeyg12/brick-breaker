@@ -293,8 +293,6 @@ class Ball {
     } else if (this.y > this.game.height - this.diameter) {
       this.speedY = -2
       this.lost = true
-      this.game.gameOver = true
-      // gameOver()
     }
     // Player area 
     if (this.x > this.game.player.x && this.y + this.diameter > this.game.player.y && this.x < this.game.player.x + this.game.player.width) {
@@ -384,19 +382,17 @@ class Game {
   }
 
   update() {
-    this.player.update()
-    this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
+    if (!this.gameOver) {
+      this.player.update()
     this.ball.update()
-    if (this.bricks.length == 0) {
+    }
+    this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
+    if (this.bricks.length == 0 || this.ball.lost) {
       this.gameOver = true
     }
   }
-  addBricks() {
-    console.log(this.maxBricks)
-  }
 }
 const game = new Game(canvas.width, canvas.height)
-
 function animate(timestamp) {
   const deltaTime =  timestamp - lastTime
   lastTime = timestamp
