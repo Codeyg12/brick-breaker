@@ -181,6 +181,9 @@ class InputHandler {
       if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !this.game.keys.includes(e.key)) {
         this.game.keys.push(e.key)
       }
+      if (this.game.gameOver) {
+        console.log(e.key)
+      }
     })
 
     window.addEventListener('keyup', (e) => {
@@ -337,12 +340,19 @@ class UI {
     if (this.game.gameOver) {
       context.textAlign ='center'
       context.font = '50px Helvetica'
+      let restartMessage = 'To restart press Enter'
       if (!this.ball.lost) {
         context.fillText('You broke all bricks',this.game.width * 0.5,
         this.game.height * 0.5 - 40)
-      } else {
-        context.fillText('You lost your ball',this.game.width * 0.5,
-        this.game.height * 0.5 - 40)
+        context.font = '30px Helvetica'
+        context.fillText(restartMessage,this.game.width * 0.5,
+          this.game.height * 0.5 + 40)
+        } else {
+          context.fillText('You lost your ball',this.game.width * 0.5,
+          this.game.height * 0.5 - 40)
+          context.font = '30px Helvetica'
+        context.fillText(restartMessage,this.game.width * 0.5,
+          this.game.height * 0.5 + 40)
       }
     }
     context.restore()
