@@ -297,21 +297,15 @@ class Ball {
       this.speedY = -2
     }
     // brick detection
-    // for (let i = 0; i < this.game.bricks.length; i++) {
-    //   if (this.x < this.game.bricks[i].x && this.x > this.game.bricks[i].x && this.y < this.game.bricks[i].y + this.game.bricks[i].height && this.y > this.game.bricks[i].y) {
-    //     console.log('y')
-    //   }
-    // }
-    //! COLLISION
-    // rect1.x < rect2.x + rect2.width &&
-      // rect1.x + rect1.diameter > rect2.x &&
-      // rect1.y < rect2.y + rect2.height &&
-      // rect1.diameter + rect1.y > rect2.y
-      //! UPPER
-    // ballCurrent[0] > bricks[i].bottomLeft[0] &&
-    //     ballCurrent[0] < bricks[i].bottomRight[0] &&
-    //     ballCurrent[1] + ballDiameter > bricks[i].bottomLeft[1] &&
-    //     ballCurrent[1] < bricks[i].topLeft[1]
+    for (let i = 0; i < this.game.bricks.length; i++) {
+      if (this.x - (this.diameter * 2) < this.game.bricks[i].x && this.y - (this.diameter * 2) < this.game.bricks[i].y && this.x - (this.diameter * 2) > this.game.bricks[i].x - this.game.bricks[i].width && this.y - (this.diameter * 2) > this.game.bricks[i].y - this.game.bricks[i].height) {
+        this.game.bricks[i].markedForDeletion = true
+        this.speedY = 2
+      }
+      // if (this.y - (this.diameter * 2) > this.game.bricks[i].y - this.game.bricks[i].height) {
+      //   this.speedY = 2
+      // }
+    }
     this.y += this.speedY
     this.x += this.speedX
   }
@@ -348,24 +342,11 @@ class Game {
 
   update() {
     this.player.update()
-    this.bricks.forEach(brick => {
-      if (this.checkCollision(this.ball, brick)) {
-        brick.markedForDeletion = true
-      }
-    })
     this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
     this.ball.update()
   }
   addBricks() {
     console.log(this.maxBricks)
-  }
-  checkCollision(rect1, rect2) {
-    return (
-      rect1.x < rect2.x + rect2.width &&
-      rect1.x + rect1.diameter > rect2.x &&
-      rect1.y < rect2.y + rect2.height &&
-      rect1.diameter + rect1.y > rect2.y
-    );
   }
 }
 const game = new Game(canvas.width, canvas.height)
