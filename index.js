@@ -271,6 +271,7 @@ class Ball {
     this.speedY = -2
     this.diameter = 10
     this.color = 'darkmagenta'
+    this.score = 0
   }
   draw(context) {
     context.beginPath()
@@ -301,6 +302,7 @@ class Ball {
       if (this.x - (this.diameter * 2) < this.game.bricks[i].x && this.y - (this.diameter * 2) < this.game.bricks[i].y && this.x - (this.diameter * 2) > this.game.bricks[i].x - this.game.bricks[i].width && this.y - (this.diameter * 2) > this.game.bricks[i].y - this.game.bricks[i].height) {
         this.game.bricks[i].markedForDeletion = true
         // this.speedY = 2
+        this.score++
         this.changeDirection()
       }
     }
@@ -320,6 +322,31 @@ class Ball {
   }
 }
 
+class UI {
+  constructor(game, ball) {
+    this.game = game;
+    this.ball = ball
+    this.fontFamily = 20;
+    this.color = 'black';
+  }
+  draw(context) {
+    context.save();
+    context.fillStyle = this.color
+    context.fillText(`Score: ${this.ball.score}`, 20, 10)
+    if (this.game.gameOver) {
+      context.textAlign ='center'
+      if (!this.ball.lost) {
+        context.fillText('You broke all bricks',this.game.width * 0.5,
+        this.game.height * 0.5 - 40)
+      } else {
+        context.fillText('You lost your ball',this.game.width * 0.5,
+        this.game.height * 0.5 - 40)
+      }
+    }
+    context.restore()
+  }
+}
+
 class Game {
   constructor(width, height) {
     this.width = width
@@ -327,6 +354,7 @@ class Game {
     this.player = new Player(this)
     this.input = new InputHandler(this)
     this.ball = new Ball(this)
+    this.ui = new UI(this, this.ball)
     this.gameStart = true
     this.keys = []
     this.bricks = []
@@ -347,6 +375,7 @@ class Game {
       brick.draw(context)
     })
     this.ball.draw(context)
+    this.ui.draw(context)
   }
 
   update() {
