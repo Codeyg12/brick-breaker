@@ -272,6 +272,7 @@ class Ball {
     this.diameter = 10
     this.color = 'darkmagenta'
     this.score = 0
+    this.lost = false
   }
   draw(context) {
     context.beginPath()
@@ -291,6 +292,8 @@ class Ball {
       this.speedY = 2
     } else if (this.y > this.game.height - this.diameter) {
       this.speedY = -2
+      this.lost = true
+      this.game.gameOver = true
       // gameOver()
     }
     // Player area 
@@ -335,6 +338,7 @@ class UI {
     context.fillText(`Score: ${this.ball.score}`, 20, 10)
     if (this.game.gameOver) {
       context.textAlign ='center'
+      context.font = '50px Helvetica'
       if (!this.ball.lost) {
         context.fillText('You broke all bricks',this.game.width * 0.5,
         this.game.height * 0.5 - 40)
@@ -356,6 +360,7 @@ class Game {
     this.ball = new Ball(this)
     this.ui = new UI(this, this.ball)
     this.gameStart = true
+    this.gameOver = false
     this.keys = []
     this.bricks = []
     this.maxBricks = 15
@@ -382,6 +387,9 @@ class Game {
     this.player.update()
     this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
     this.ball.update()
+    if (this.bricks.length == 0) {
+      this.gameOver = true
+    }
   }
   addBricks() {
     console.log(this.maxBricks)
