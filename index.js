@@ -303,7 +303,7 @@ class Ball {
       this.y + this.diameter > this.game.player.y &&
       this.x < this.game.player.x + this.game.player.width
     ) {
-      this.speedY = -2;
+      this.changeDirection();
     }
     // brick detection
     for (let i = 0; i < this.game.bricks.length; i++) {
@@ -438,3 +438,5 @@ function animate(timestamp) {
   requestAnimationFrame(animate);
 }
 animate(0);
+
+// Fix ball bouncing off bricks and player
