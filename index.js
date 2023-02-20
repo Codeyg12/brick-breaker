@@ -165,153 +165,164 @@ function gameOver() {
   restart.innerHTML = "Click any button to play again";
 }
 
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 560;
+canvas.height = 300;
 
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
-canvas.width = 560
-canvas.height = 300
-
-
-let lastTime = 0
+let lastTime = 0;
 
 class InputHandler {
   constructor(game) {
-    this.game = game
-    window.addEventListener('keydown', (e) => {
-      if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !this.game.keys.includes(e.key)) {
-        this.game.keys.push(e.key)
+    this.game = game;
+    window.addEventListener("keydown", (e) => {
+      if (
+        (e.key === "ArrowLeft" || e.key === "ArrowRight") &&
+        !this.game.keys.includes(e.key)
+      ) {
+        this.game.keys.push(e.key);
       }
-      if (this.game.gameOver && e.key === 'Enter') {
-        this.game.keys.push(e.key)
+      if (this.game.gameOver && e.key === "Enter") {
+        this.game.keys.push(e.key);
       }
-    })
+    });
 
-    window.addEventListener('keyup', (e) => {
+    window.addEventListener("keyup", (e) => {
       if (this.game.keys.includes(e.key)) {
-        this.game.keys.splice(this.game.keys.indexOf(e.key), 1)
+        this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
       }
-    })
+    });
   }
 }
 
 class Brick {
   constructor(multiple) {
-    this.width = 100
-    this.height = 20
-    this.color = 'greenyellow'
-    this.gap = 100
-    this.multiple = multiple
-    this.x = 110 * this.multiple
-    this.markedForDeletion = false
+    this.width = 100;
+    this.height = 20;
+    this.color = "greenyellow";
+    this.gap = 100;
+    this.multiple = multiple;
+    this.x = 110 * this.multiple;
+    this.markedForDeletion = false;
   }
   draw(context) {
-    context.fillStyle = this.color
-    context.fillRect(this.x - this.gap, this.y, this.width, this.height)
-    context.fillStyle = 'black'
-    context.strokeRect(this.x - this.gap, this.y, this.width, this.height)
+    context.fillStyle = this.color;
+    context.fillRect(this.x - this.gap, this.y, this.width, this.height);
+    context.fillStyle = "black";
+    context.strokeRect(this.x - this.gap, this.y, this.width, this.height);
   }
 }
 class Row1 extends Brick {
   constructor(multiple) {
-    super(multiple)
-    this.y = 10
+    super(multiple);
+    this.y = 10;
   }
 }
 class Row2 extends Brick {
   constructor(multiple) {
-    super(multiple)
-    this.y = 40
+    super(multiple);
+    this.y = 40;
   }
 }
 class Row3 extends Brick {
   constructor(multiple) {
-    super(multiple)
-    this.y = 70
+    super(multiple);
+    this.y = 70;
   }
 }
 
 class Player {
   constructor(game) {
-    this.game = game
-    this.width = 100
-    this.height = 20
-    this.x = 230
-    this.y = 270
-    this.speedX = 0
-    this.color = 'orangered'
+    this.game = game;
+    this.width = 100;
+    this.height = 20;
+    this.x = 230;
+    this.y = 270;
+    this.speedX = 0;
+    this.color = "orangered";
   }
 
   draw(context) {
-    context.fillStyle = this.color
-    context.fillRect(this.x, this.y, this.width, this.height)
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
   }
 
   update() {
-    if (this.game.keys.includes('ArrowRight')) {
-      this.speedX = 5
-    } else if (this.game.keys.includes('ArrowLeft')) {
-      this.speedX = -5
+    if (this.game.keys.includes("ArrowRight")) {
+      this.speedX = 5;
+    } else if (this.game.keys.includes("ArrowLeft")) {
+      this.speedX = -5;
     } else {
-      this.speedX = 0
+      this.speedX = 0;
     }
-    this.x += this.speedX
+    this.x += this.speedX;
 
     if (this.x > this.game.width - this.width) {
-      this.x = this.game.width - this.width
+      this.x = this.game.width - this.width;
     } else if (this.x < 0) {
-      this.x = 0
+      this.x = 0;
     }
   }
-
 }
 
 class Ball {
   constructor(game) {
-    this.game = game
-    this.x = 280
-    this.y = 260
-    this.speedX = -2
-    this.speedY = -2
-    this.diameter = 10
-    this.color = 'darkmagenta'
-    this.score = 0
-    this.lost = false
+    this.game = game;
+    this.x = 280;
+    this.y = 260;
+    this.speedX = -2;
+    this.speedY = -2;
+    this.diameter = 10;
+    this.color = "darkmagenta";
+    this.score = 0;
+    this.lost = false;
   }
   draw(context) {
-    context.beginPath()
-    context.fillStyle = this.color
-    context.arc(this.x, this.y, this.diameter, 0, 2 * Math.PI)
+    context.beginPath();
+    context.fillStyle = this.color;
+    context.arc(this.x, this.y, this.diameter, 0, 2 * Math.PI);
     context.fill();
-    context.beginPath()
-    context.strokeRect(this.x - this.diameter, this.y - this.diameter, this.diameter * 2, this.diameter * 2)
+    // context.beginPath()
+    // context.strokeRect(this.x - this.diameter, this.y - this.diameter, this.diameter * 2, this.diameter * 2)
   }
   update() {
     // Play area border
     if (this.x < 0 + this.diameter) {
-      this.speedX = 2
+      this.speedX = 2;
     } else if (this.x > this.game.width - this.diameter) {
-      this.speedX = -2
+      this.speedX = -2;
     } else if (this.y < 0 + this.diameter) {
-      this.speedY = 2
+      this.speedY = 2;
     } else if (this.y > this.game.height - this.diameter) {
-      this.speedY = -2
-      this.lost = true
+      this.speedY = -2;
+      this.lost = true;
     }
-    // Player area 
-    if (this.x > this.game.player.x && this.y + this.diameter > this.game.player.y && this.x < this.game.player.x + this.game.player.width) {
-      this.speedY = -2
+    // Player area
+    if (
+      this.x > this.game.player.x &&
+      this.y + this.diameter > this.game.player.y &&
+      this.x < this.game.player.x + this.game.player.width
+    ) {
+      this.speedY = -2;
     }
     // brick detection
     for (let i = 0; i < this.game.bricks.length; i++) {
-      if (this.x - (this.diameter * 2) < this.game.bricks[i].x && this.y - (this.diameter * 2) < this.game.bricks[i].y && this.x - (this.diameter * 2) > this.game.bricks[i].x - this.game.bricks[i].width && this.y - (this.diameter * 2) > this.game.bricks[i].y - this.game.bricks[i].height) {
-        this.game.bricks[i].markedForDeletion = true
+      if (
+        this.x - this.diameter * 2 < this.game.bricks[i].x &&
+        this.y - this.diameter * 2 < this.game.bricks[i].y &&
+        this.x - this.diameter * 2 >
+          this.game.bricks[i].x - this.game.bricks[i].width &&
+        this.y - this.diameter * 2 >
+          this.game.bricks[i].y - this.game.bricks[i].height
+      ) {
+        this.game.bricks[i].markedForDeletion = true;
         // this.speedY = 2
-        this.score++
-        this.changeDirection()
+        this.score++;
+        this.changeDirection();
       }
     }
-    this.y += this.speedY
-    this.x += this.speedX
+    this.y += this.speedY;
+    this.x += this.speedX;
   }
   changeDirection() {
     if (this.speedX == 2 && this.speedY == 2) {
@@ -329,90 +340,101 @@ class Ball {
 class UI {
   constructor(game, ball) {
     this.game = game;
-    this.ball = ball
+    this.ball = ball;
     this.fontFamily = 20;
-    this.color = 'black';
+    this.color = "black";
   }
   draw(context) {
     context.save();
-    context.fillStyle = this.color
-    context.fillText(`Score: ${this.ball.score}`, 20, 10)
+    context.fillStyle = this.color;
+    context.fillText(`Score: ${this.ball.score}`, 20, 10);
     if (this.game.gameOver) {
-      context.textAlign ='center'
-      context.font = '50px Helvetica'
-      let restartMessage = 'To restart press Enter'
+      context.textAlign = "center";
+      context.font = "50px Helvetica";
+      let restartMessage = "To restart press Enter";
       if (!this.ball.lost) {
-        context.fillText('You broke all bricks',this.game.width * 0.5,
-        this.game.height * 0.5 - 40)
-        context.font = '30px Helvetica'
-        context.fillText(restartMessage,this.game.width * 0.5,
-          this.game.height * 0.5 + 40)
-        } else {
-          context.fillText('You lost your ball',this.game.width * 0.5,
-          this.game.height * 0.5 - 40)
-          context.font = '30px Helvetica'
-        context.fillText(restartMessage,this.game.width * 0.5,
-          this.game.height * 0.5 + 40)
+        context.fillText(
+          "You broke all bricks",
+          this.game.width * 0.5,
+          this.game.height * 0.5 - 40
+        );
+        context.font = "30px Helvetica";
+        context.fillText(
+          restartMessage,
+          this.game.width * 0.5,
+          this.game.height * 0.5 + 40
+        );
+      } else {
+        context.fillText(
+          "You lost your ball",
+          this.game.width * 0.5,
+          this.game.height * 0.5 - 40
+        );
+        context.font = "30px Helvetica";
+        context.fillText(
+          restartMessage,
+          this.game.width * 0.5,
+          this.game.height * 0.5 + 40
+        );
       }
     }
-    context.restore()
+    context.restore();
   }
 }
 
 class Game {
   constructor(width, height) {
-    this.width = width
-    this.height = height
-    this.player = new Player(this)
-    this.input = new InputHandler(this)
-    this.ball = new Ball(this)
-    this.ui = new UI(this, this.ball)
-    this.gameStart = true
-    this.gameOver = false
-    this.keys = []
-    this.bricks = []
-    this.maxBricks = 15
+    this.width = width;
+    this.height = height;
+    this.player = new Player(this);
+    this.input = new InputHandler(this);
+    this.ball = new Ball(this);
+    this.ui = new UI(this, this.ball);
+    this.gameStart = true;
+    this.gameOver = false;
+    this.keys = [];
+    this.bricks = [];
+    this.maxBricks = 15;
   }
-  
+
   draw(context) {
-    this.player.draw(context)
-      if (this.gameStart) {
-        this.gameStart = !this.gameStart
-        for (let i = 1; i <= 5; i++) {
-          this.bricks.push(new Row1(i))
-          this.bricks.push(new Row2(i))
-          this.bricks.push(new Row3(i))
-        }
+    this.player.draw(context);
+    if (this.gameStart) {
+      this.gameStart = !this.gameStart;
+      for (let i = 1; i <= 5; i++) {
+        this.bricks.push(new Row1(i));
+        this.bricks.push(new Row2(i));
+        this.bricks.push(new Row3(i));
       }
-    this.bricks.forEach(brick => {
-      brick.draw(context)
-    })
-    this.ball.draw(context)
-    this.ui.draw(context)
+    }
+    this.bricks.forEach((brick) => {
+      brick.draw(context);
+    });
+    this.ball.draw(context);
+    this.ui.draw(context);
   }
 
   update() {
     if (!this.gameOver) {
-      this.player.update()
-    this.ball.update()
+      this.player.update();
+      this.ball.update();
     }
-    this.bricks = this.bricks.filter(brick => !brick.markedForDeletion)
+    this.bricks = this.bricks.filter((brick) => !brick.markedForDeletion);
     if (this.bricks.length == 0 || this.ball.lost) {
-      this.gameOver = true
+      this.gameOver = true;
     }
-    if (this.keys.includes('Enter')) {
-      window.location.reload()
+    if (this.keys.includes("Enter")) {
+      window.location.reload();
     }
   }
 }
-const game = new Game(canvas.width, canvas.height)
+const game = new Game(canvas.width, canvas.height);
 function animate(timestamp) {
-  const deltaTime =  timestamp - lastTime
-  lastTime = timestamp
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  game.draw(ctx)
-  game.update(deltaTime)
-  requestAnimationFrame(animate)
+  const deltaTime = timestamp - lastTime;
+  lastTime = timestamp;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  game.draw(ctx);
+  game.update(deltaTime);
+  requestAnimationFrame(animate);
 }
-animate(0)
-// ? classes for ball and player?
+animate(0);
